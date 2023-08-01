@@ -26,8 +26,14 @@ router.get('/:id_pedido',(req, res, next) => {
 
 // INSERE UM PEDIDO NA EMPRESA..
 router.post('/',(req, res, next) => {
+  const pedido = {
+    id_funcionario: req.body.id_funcionario,
+    quantidade: req.body.quantidade,
+    nota: req.body.nota
+  }
     res.status(201).send({
-      mensagem: 'Pedido inserido com sucesso.'
+      mensagem: 'Pedido inserido com sucesso.',
+      pedidoCriado: pedido
     })
   });
 

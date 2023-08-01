@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('../mysql').pool;
 
 // RETORNA TODOS OS FUNCIONARIOS..
 router.get('/',(req, res, next) => {
@@ -26,8 +27,17 @@ router.get('/:id_funcionario',(req, res, next) => {
 
 // INSERE UM FUNCIONÁRIO NA EMPRESA..
 router.post('/',(req, res, next) => {
+  const funcionario = {
+    nome: req.body.nome,
+    idade: req.body.idade,
+    preco: req.body.preco,
+    trabalho: req.body.trabalho,
+    endereco: req.body.endereco
+  }
+
     res.status(201).send({
-      mensagem: 'Funcionários inserido na empresa..'
+      mensagem: 'Funcionários inserido na empresa..',
+      funcionarioCriado: funcionario
     })
   });
 
