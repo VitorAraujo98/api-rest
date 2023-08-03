@@ -6,18 +6,36 @@ const mysql = require('../mysql').pool;
 router.get('/',(req, res, next) => {
   mysql.getConnection((error, conn) => {
     if(error) {return res.status(500).send({ error: error})}
-    conn.query(
-      'SELECT * FROM pedidos;',
+    conn.query(  ` SELECT pedidos.id_pedido,
+                   pedidos.quantidade,
+                   pedidos.id_funcionario,
+                   pedidos.nota,
+                   funcionarios.id_funcionario,
+                   funcionarios.nome,
+                   funcionarios.idade,
+                   funcionarios.preco,
+                   funcionarios.trabalho,
+                   funcionarios.endereco
+       FROM pedidos
+       INNER JOIN funcionarios
+       ON funcionarios.id_funcionario = pedidos.id_funcionario;`,
+
       (error, results, field) => {
         if(error) {return res.status(500).send({ error: error})}
         const response = {
-          quantidade: results.length,
           pedidos: results.map(pedido => {
             return {
               id_pedido: pedido.id_pedido,
               quantidade: pedido.quantidade,
-              id_funcionario: pedido.id_funcionario,
-              nota: pedido.nota,
+              produto:{
+                id_funcionario: pedido.id_funcionario,
+                nome: pedido.nome,
+                idade: pedido.idade,
+                preco: pedido.preco,
+                trabalho: pedido.trabalho,
+                endereco: pedido.endereco,
+                nota: pedido.nota,
+              },
               request: {
               tipo: 'GET',
               descricao: 'Retorna os detalhes de um pedido específico',

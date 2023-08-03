@@ -7,6 +7,7 @@ const rotaFuncionarios = require('./routes/funcionarios');
 const rotaPedidos = require('./routes/Pedidos');
 
 app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false})); // Apenas dados simples
 app.use(bodyParser.json()); // json de entrada no body
 
