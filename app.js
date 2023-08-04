@@ -4,7 +4,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const rotaFuncionarios = require('./routes/funcionarios');
-const rotaPedidos = require('./routes/Pedidos');
+const rotaPedidos = require('./routes/pedidos');
+const rotaUsuarios = require('./routes/usuarios');
+
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
@@ -29,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use('/funcionarios', rotaFuncionarios);
 app.use('/pedidos', rotaPedidos);
+app.use('/usuarios', rotaUsuarios);
 
 
 // Quando nao encontra rota, entra aqui:
